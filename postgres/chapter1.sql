@@ -114,3 +114,22 @@ FROM EVENTS
 WHERE starts >= '2018-04-01';
 
 CREATE INDEX events_starts ON EVENTS USING btree (starts);
+
+--- Day 1 Homework
+---- 1
+SELECT *
+FROM pg_class
+WHERE relname IN ('countries', 'cities', 'venues', 'events');
+
+--- 2
+SELECT DISTINCT c.country_name
+FROM EVENTS e
+    JOIN venues v ON e.title = 'Fight Club'
+    JOIN countries c ON v.country_code = c.country_code;
+
+--- 3
+ALTER TABLE venues
+ADD COLUMN active BOOLEAN DEFAULT TRUE;
+
+SELECT *
+FROM venues;
