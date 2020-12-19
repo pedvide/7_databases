@@ -59,3 +59,23 @@ FROM EVENTS
 WHERE venues.name = 'Crystal Ballroom';
 
 --- Grouping
+SELECT venue_id,
+    COUNT(*)
+FROM EVENTS
+GROUP BY venue_id;
+
+SELECT venue_id,
+    COUNT(*)
+FROM EVENTS
+GROUP BY venue_id
+HAVING COUNT(*) >= 2
+    AND venue_id IS NOT NULL;
+
+SELECT venue_id
+FROM EVENTS
+GROUP BY venue_id;
+
+SELECT DISTINCT venue_id
+FROM EVENTS;
+
+--- Window Functions
