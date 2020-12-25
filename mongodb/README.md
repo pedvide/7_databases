@@ -11,5 +11,5 @@ docker run --name mongo-server -d -p 27017:27017 --net mongo -e MONGO_INITDB_ROO
 Then run commands:
 
 ```bash
-docker run -it --rm --net mongo mongo mongo --host mongo-server book
+docker run -it --net mongo --rm mongo mongo -u root -p 1234 --host mongo-server
 ```
