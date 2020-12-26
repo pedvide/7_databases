@@ -156,7 +156,89 @@ db.towns.update(
 
 ```mongodb
 db.towns.update(
-{ _id : ObjectId("59094292afbc9350ada6b808") },
+{ _id : ObjectId("5fe664fd4329956b4004ebaa") },
 { $set : { country: { $ref: "countries", $id: "us" } } }
+);
+
+var portland = db.towns.findOne(
+{ _id : ObjectId("5fe664fd4329956b4004ebaa") }
+);
+db.countries.findOne({ _id: portland.country.$id })
+```
+
+Or
+
+```mongodb
+var portland = db.towns.findOne(
+{ _id : ObjectId("5fe664fd4329956b4004ebaa") }
+);
+var portlandCountryRef = portland.country.$ref;
+db[portlandCountryRef].findOne({ _id: portland.country.$id })
+```
+
+### Deleting
+
+```mongodb
+var badBacon = {
+'exports.foods' : {
+$elemMatch : {
+name : 'bacon',
+tasty : false
+}
+}
+};
+db.countries.find(badBacon);
+db.countries.remove(badBacon);
+```
+
+### udf
+
+```mongodb
+db.towns.find(function() { return this.population > 6000 && this.population < 600000; }, {_id:false, name: true});
+db.towns.find("this.population > 6000 && this.population < 600000")
+```
+
+```mongodb
+db.towns.find({
+$where: "this.population > 6000 && this.population < 600000",
+famousFor: /Phil/
+})
+```
+
+## Homework Day 1
+
+### 1
+
+```mongodb
+db.ex1.insert({hello: "world"});
+db.ex1.find({}, {_id: false})
+```
+
+### 2
+
+```mongodb
+db.towns.find(
+    {'name' : {$regex : /new/i}},
+    {_id : 0, name : 1}
 )
+```
+
+### 3
+
+```mongodb
+db.towns.find(
+    {name : {$regex : /e/i}, famousFor : { $in : ['food', 'beer'] } },
+    {_id : 0, name : 1}
+)
+```
+
+### 4
+
+```mongodb
+db.articles.insert({name: "Author", email: "author@blogger.com", creation_date: Date("2020-11-01"), text: "Cool blog!"})
+
+db.articles.update(
+{ _id : ObjectId("5fe7a8dfa489992ed9c94ab5") },
+{ $set : { "comments" : [{author: "Person", text: "Interesting!"}] } }
+);
 ```
