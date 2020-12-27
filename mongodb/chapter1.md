@@ -242,3 +242,10 @@ db.articles.update(
 { $set : { "comments" : [{author: "Person", text: "Interesting!"}] } }
 );
 ```
+
+### 5
+
+```bash
+docker run -it --rm --net mongo -v $(pwd)/script.js:/script.js mongo \
+  mongo -u root -p 1234 --host mongo-server script.js
+```
